@@ -5,7 +5,7 @@ import { adminDb } from '@/lib/firebase/admin'
 import { registerTeamMember } from '@/lib/validations/team'
 import type { ActionResult } from '@/types'
 
-export async function joinTeamMemberAction(data: FormData): Promise<ActionResult> {
+export async function registerTeamMemberAction(data: FormData): Promise<ActionResult> {
     // Get session cookie and verify user is authenticated
     const session = await requireAuth()
 
@@ -14,6 +14,7 @@ export async function joinTeamMemberAction(data: FormData): Promise<ActionResult
     const role = data.get('role')
     const blurb = data.get('blurb')
 
+    // Validate input using Zod schema
     const parsedData = registerTeamMember.safeParse({
         displayName,
         email,
@@ -28,6 +29,7 @@ export async function joinTeamMemberAction(data: FormData): Promise<ActionResult
         }
     }
 
+    // Write team member data to Firestore
     try {
         await adminDb.collection('team_members').doc(session.uid).set({
             uid: session.uid,
