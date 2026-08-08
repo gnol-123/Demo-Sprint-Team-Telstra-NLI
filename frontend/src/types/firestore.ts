@@ -25,9 +25,13 @@ export interface UserProfile {
 export interface TeamMember {
   uid: string,
   displayName: string | null,
+  photoURL: string | null,
   email: string,
-  role: string,
+  role: 'PM' | 'DEV' | 'QA' | 'UX' | 'BA',
   blurb: string | null,
+  createdAt: Timestamp,
+  updatedAt: Timestamp,
+  _schemaVersion: 1
 }
 
 export type CreateUserProfileInput = Omit<UserProfile, 'createdAt' | 'updatedAt'>

@@ -21,7 +21,7 @@ export function getUsersCollection() {
 }
 
 export function getTeamMembersCollection() {
-  return typedCollection<TeamMember>('teamMembers')
+  return typedCollection<TeamMember>('team_members')
 }
 
 export function userDoc(uid: string) {
