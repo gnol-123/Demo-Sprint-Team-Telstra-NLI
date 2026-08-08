@@ -55,6 +55,14 @@ service cloud.firestore {
 
       allow delete: if false; // soft-delete only — set deletedAt field instead
     }
+    // Allow all authenticated users to read
+    // Only allow create update delete if authenticated user is original user 
+    match /team_members/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isAuthenticated() && request.auth.uid == userId;
+      allow delete: if isAuthenticated() && request.auth.uid == userId;
+    }
 
     // Add new collection rules above this comment using the /firebase-collection skill.
 
