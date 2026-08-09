@@ -18,13 +18,19 @@ const ROLE_LABELS: Record<string, string> = {
 }
 
 export function TeamList() {
-  const { data: members, loading } = useCollection(
-    getTeamMembersCollection(),
-    where('_schemaVersion', '==', 1)
-  )
+  const {
+    data: members,
+    loading,
+    error,
+  } = useCollection(getTeamMembersCollection(), where('_schemaVersion', '==', 1))
   const { user } = useAuth()
 
   if (loading) return <FullPageSpinner />
+
+  if (error) {
+    console.error('Error fetching team members:', error)
+    return <p className="text-red-500">Error fetching team members.</p>
+  }
 
   if (members.length === 0) {
     return (

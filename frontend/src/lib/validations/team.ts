@@ -6,7 +6,8 @@ export const registerTeamMember = z
     uid: z
       .string()
       .min(2, 'UID must be at least 2 characters')
-      .max(50, 'UID must be less than 50 characters'),
+      .max(50, 'UID must be less than 50 characters')
+      .optional(),
     displayName: z
       .string()
       .min(2, 'Name must be at least 2 characters'),
@@ -16,6 +17,7 @@ export const registerTeamMember = z
       errorMap: () => ({ message: 'Role must be one of PM, DEV, QA, UX, or BA' }),
     }),
     blurb: z.string().max(200, 'Blurb must be less than 200 characters').optional(),
+
   })
 
 export type RegisterTeamMemberInput = z.infer<typeof registerTeamMember>
