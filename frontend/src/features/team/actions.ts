@@ -6,38 +6,37 @@ import { registerTeamMember } from '@/lib/validations/team'
 import type { ActionResult } from '@/types'
 
 export async function registerTeamMemberAction(data: FormData): Promise<ActionResult> {
-    // Get session cookie and verify user is authenticated
     const session = await requireAuth()
 
     const displayName = data.get('displayName')
     const email = data.get('email')
     const role = data.get('role')
     const blurb = data.get('blurb')
+    const photoURL = data.get('photoURL')
 
-    // Validate input using Zod schema
     const parsedData = registerTeamMember.safeParse({
         displayName,
         email,
         role,
         blurb,
+        photoURL: photoURL || undefined,
     })
 
     if (!parsedData.success) {
         return {
             success: false,
-            error: "Failed to register team member. Please check your input and try again.",
+            error: 'Failed to register team member. Please check your input and try again.',
         }
     }
 
-    // Write team member data to Firestore
     try {
         await adminDb.collection('team_members').doc(session.uid).set({
             uid: session.uid,
             displayName: parsedData.data.displayName,
-            photoURL: session.user.photoURL || null,
+            photoURL: parsedData.data.photoURL || null,
             email: parsedData.data.email,
             role: parsedData.data.role,
-            blurb: parsedData.data.blurb,
+            blurb: parsedData.data.blurb ?? null,
             createdAt: new Date(),
             updatedAt: new Date(),
             _schemaVersion: 1,
