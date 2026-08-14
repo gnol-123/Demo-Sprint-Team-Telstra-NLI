@@ -43,7 +43,7 @@ export default function TeamPage() {
 
       <TeamList />
 
-      {showForm && <RegisterTeamMemberForm />}
+      {showForm && <RegisterTeamMemberForm onSuccess={() => setShowForm(false)} />}
     </div>
   )
 }

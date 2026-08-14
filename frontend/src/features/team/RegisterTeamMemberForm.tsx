@@ -7,10 +7,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { Upload, X } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import {
-  registerTeamMember,
-  type RegisterTeamMemberInput,
-} from '@/lib/validations/team'
+import { registerTeamMember, type RegisterTeamMemberInput } from '@/lib/validations/team'
 import { uploadTeamPhoto } from '@/lib/firebase/storage'
 import { registerTeamMemberAction } from './actions'
 
@@ -24,7 +21,11 @@ const ROLE_LABELS: Record<string, string> = {
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024 // 2MB
 
-export function RegisterTeamMemberForm() {
+interface RegisterTeamMemberFormProps {
+  onSuccess?: () => void
+}
+
+export function RegisterTeamMemberForm({ onSuccess }: RegisterTeamMemberFormProps) {
   const router = useRouter()
   const { profile, user } = useAuth()
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -145,15 +146,11 @@ export function RegisterTeamMemberForm() {
 
           {photoPreview ? (
             <div className="relative inline-block">
-              <img
-                src={photoPreview}
-                alt="Preview"
-                className="h-24 w-24 rounded-lg object-cover"
-              />
+              <img src={photoPreview} alt="Preview" className="h-24 w-24 rounded-lg object-cover" />
               <button
                 type="button"
                 onClick={removePhoto}
-                className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-zinc-700 text-white hover:bg-zinc-900"
+                className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-zinc-700 text-white hover:bg-zinc-900"
                 aria-label="Remove photo"
               >
                 <X className="h-3 w-3" />
@@ -172,9 +169,7 @@ export function RegisterTeamMemberForm() {
               }`}
             >
               <Upload className="mb-2 h-5 w-5 text-zinc-400" />
-              <p className="text-sm text-zinc-500">
-                Drag & drop a photo, or click to browse
-              </p>
+              <p className="text-sm text-zinc-500">Drag & drop a photo, or click to browse</p>
               <p className="mt-1 text-xs text-zinc-400">PNG, JPG up to 2MB</p>
             </div>
           )}
@@ -258,8 +253,7 @@ export function RegisterTeamMemberForm() {
 
         <div className="space-y-1.5">
           <label htmlFor="blurb" className="text-sm font-medium">
-            Short Bio{' '}
-            <span className="text-zinc-400">(optional)</span>
+            Short Bio <span className="text-zinc-400">(optional)</span>
           </label>
           <textarea
             id="blurb"
