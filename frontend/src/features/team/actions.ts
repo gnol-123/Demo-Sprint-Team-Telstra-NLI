@@ -11,7 +11,7 @@ export async function registerTeamMemberAction(data: FormData): Promise<ActionRe
     const displayName = data.get('displayName')
     const email = data.get('email')
     const role = data.get('role')
-    const blurb = data.get('blurb')
+    const blurb = data.get('blurb') || undefined
     const photoURL = data.get('photoURL')
 
     const parsedData = registerTeamMember.safeParse({
