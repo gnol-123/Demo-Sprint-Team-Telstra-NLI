@@ -53,3 +53,19 @@ export async function registerTeamMemberAction(data: FormData): Promise<ActionRe
         }
     }
 }
+
+export async function deleteTeamMemberAction(): Promise<ActionResult> {
+    const session = await requireAuth()
+
+    try {
+        await adminDb.collection('team_members').doc(session.uid).delete()
+
+        return { success: true }
+    } catch (error) {
+        console.error('Error deleting team member:', error)
+        return {
+            success: false,
+            error: 'Failed to delete team member. Please try again.',
+        }
+    }
+}
