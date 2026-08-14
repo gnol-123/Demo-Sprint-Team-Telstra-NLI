@@ -123,6 +123,7 @@ export function RegisterTeamMemberForm({ onSuccess }: RegisterTeamMemberFormProp
 
     if (result.success) {
       toast.success("You've joined the team!")
+      onSuccess?.()
       router.refresh()
     } else {
       toast.error(result.error ?? 'Failed to join team')
