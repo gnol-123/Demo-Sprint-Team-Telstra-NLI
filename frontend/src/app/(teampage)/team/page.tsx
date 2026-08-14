@@ -7,13 +7,14 @@ import { RegisterTeamMemberForm } from '@/features/team/RegisterTeamMemberForm'
 import { useCollection } from '@/hooks/useFirestore'
 import { getTeamMembersCollection } from '@/lib/firebase/firestore'
 import { useAuth } from '@/hooks/useAuth'
+import { useMemo } from 'react'
 import { where } from 'firebase/firestore'
 
 export default function TeamPage() {
-  const { data: members } = useCollection(
-    getTeamMembersCollection(),
-    where('_schemaVersion', '==', 1)
-  )
+  const memberRef = useMemo(() => getTeamMembersCollection(), [])
+  const constraints = useMemo(() => [where('_schemaVersion', '==', 1)], [])
+
+  const { data: members } = useCollection(memberRef, ...constraints)
   const { user } = useAuth()
   const [showForm, setShowForm] = useState(false)
 
