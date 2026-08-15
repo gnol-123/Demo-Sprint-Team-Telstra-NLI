@@ -62,16 +62,23 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1 text-center">
-        <h1 className="text-2xl font-bold tracking-tight">Sign in</h1>
-        <p className="text-sm text-zinc-500">Enter your credentials to continue</p>
+    <div className="space-y-6"> 
+      <div className="space-y-2 text-center">
+
+        {/*logo*/}
+        <div className="mb-8 flex justify-center">
+          <img src="/telstra-logo.png" alt="Telstra" className="h-14 w-auto" />
+        </div>
+
+        <h1 className="text-2xl font-bold tracking-tight text-white">Sign in</h1>
+        <p className="text-xs text-zinc-500">Enter your credentials to continue</p>
       </div>
 
+      {/*Google Button*/}
       <button
         type="button"
         onClick={handleGoogleSignIn}
-        className="flex w-full items-center justify-center gap-3 rounded-md border border-zinc-300 bg-white px-4 py-2.5 text-sm font-medium shadow-sm transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800"
+        className="flex w-full items-center justify-center gap-3 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-zinc-800"
       >
         <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
           <path
@@ -94,18 +101,20 @@ export default function SignInPage() {
         Continue with Google
       </button>
 
+      {/*Or thingy majigy*/}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-zinc-200 dark:border-zinc-700" />
+          <span className="w-full border-t border-zinc-500" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-zinc-50 px-2 text-zinc-400 dark:bg-zinc-950">or</span>
+          <span className="bg-black px-2 text-zinc-500">or</span>
         </div>
       </div>
 
+      {/*Email Part*/}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-1.5">
-          <label htmlFor="email" className="text-sm font-medium">
+          <label htmlFor="email" className="text-sm font-medium text-zinc-400">
             Email
           </label>
           <input
@@ -114,7 +123,7 @@ export default function SignInPage() {
             autoComplete="email"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? 'email-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white shadow-sm placeholder:text-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500"
             placeholder="you@example.com"
             {...register('email')}
           />
@@ -125,9 +134,10 @@ export default function SignInPage() {
           )}
         </div>
 
+        {/*Password Part*/}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <label htmlFor="password" className="text-sm font-medium">
+            <label htmlFor="password" className="text-sm font-medium text-zinc-400">
               Password
             </label>
           </div>
@@ -137,7 +147,7 @@ export default function SignInPage() {
             autoComplete="current-password"
             aria-invalid={!!errors.password}
             aria-describedby={errors.password ? 'password-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 pr-10 text-sm text-white shadow-sm placeholder:text-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500"
             placeholder="••••••••"
             {...register('password')}
           />
@@ -148,24 +158,37 @@ export default function SignInPage() {
           )}
         </div>
 
+        {/*forgot password*/}
+        <div className="flex items-center justify-end">
+          <Link href="/auth/forgot-password" className="text-[13px] text-zinc-700 hover:text-white">
+          Forgot password?
+          </Link>
+        </div>
+
+        {/*submit button*/}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-black px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+          className="w-full rounded-lg bg-white px-4 py-2.5 text-sm font-bold text-black transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
         >
           {isSubmitting ? 'Signing in…' : 'Sign in'}
         </button>
       </form>
-
-      <p className="text-center text-sm text-zinc-500">
+      
+      {/*create an acc*/}
+      <p className="text-center text-xs text-zinc-500">
         Don&apos;t have an account?{' '}
         <Link
           href="/auth/signup"
-          className="font-medium text-zinc-900 hover:underline dark:text-white"
+          className="font-medium hover:underline text-white"
         >
           Create one
         </Link>
       </p>
+      <p className="text-center text-xs text-zinc-700">Team 17 × Telstra</p>
     </div>
+
+
+    
   )
 }
