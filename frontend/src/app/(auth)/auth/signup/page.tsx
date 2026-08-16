@@ -58,7 +58,7 @@ export default function SignUpPage() {
 
         {/*logo*/}
         <div className="mb-8 flex justify-center ">
-          <img src="/telstra-logo.png" alt="Telstra" className="h-14 w-auto" />
+          <img src="/telstra-logo.svg" alt="Telstra" className="h-14 w-auto" />
         </div>
 
         <h1 className="text-2xl font-bold tracking-tight text-white">Create account</h1>
