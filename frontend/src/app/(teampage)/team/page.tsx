@@ -23,34 +23,36 @@ export default function TeamPage() {
   const hasJoined = members.some((m) => m.uid === user?.uid)
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Team</h1>
-          <p className="mt-1 text-sm text-zinc-500">
-            {members.length} {members.length === 1 ? 'member' : 'members'}
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          {!hasJoined && (
-            <button
-              type="button"
-              onClick={() => setShowForm(true)}
-              className="inline-flex items-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
-            >
-              <Plus className="h-4 w-4" />
-              Join Team
-            </button>
-          )}
+    <div className="space-y-12">
+      <div className="fixed top-0 right-6 z-10 flex h-16 items-center">
+        <button
+          type="button"
+          onClick={() => signOut()}
+          className="inline-flex items-center gap-2 text-xs font-medium text-zinc-500 transition-colors hover:text-zinc-200"
+        >
+          <LogOut className="h-3.5 w-3.5" />
+          Log out
+        </button>
+      </div>
+
+      <div className="text-center">
+        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl">
+          Team 17 × Telstra – Robotics and NLI
+        </h1>
+        <p className="mx-auto mt-5 max-w-xl text-zinc-400">
+          Co-designing the next generation of seamless connectivity solutions for regional
+          enterprise infrastructure.
+        </p>
+        {!hasJoined && (
           <button
             type="button"
-            onClick={() => signOut()}
-            className="inline-flex items-center gap-2 rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800"
+            onClick={() => setShowForm(true)}
+            className="mt-8 inline-flex items-center gap-2 rounded-md border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-white"
           >
-            <LogOut className="h-3.5 w-3.5" />
-            Log out
+            <Plus className="h-4 w-4" />
+            Join Team
           </button>
-        </div>
+        )}
       </div>
 
       <TeamList />
