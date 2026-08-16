@@ -77,10 +77,10 @@ export function TeamList() {
         return (
           <div
             key={member.uid}
-            className="relative flex flex-col items-center rounded-2xl border border-dashed border-zinc-700 bg-zinc-900/40 p-6 text-center"
+            className="relative flex min-h-[30rem] flex-col items-center rounded-2xl border border-dashed border-zinc-700 bg-zinc-900/40 px-6 py-10 text-center"
           >
             {confirmTarget === member.uid ? (
-              <div className="flex flex-col items-center gap-3 py-2">
+              <div className="flex flex-1 flex-col items-center justify-center gap-3 py-2">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-950/40">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                 </div>
