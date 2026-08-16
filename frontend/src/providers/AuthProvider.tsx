@@ -93,9 +93,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return
         }
         setUser(firebaseUser)
+        await setSessionCookie()
         const userProfile = await syncUserProfile(firebaseUser)
         setProfile(userProfile)
-        await setSessionCookie()
       } else {
         setUser(null)
         setProfile(null)

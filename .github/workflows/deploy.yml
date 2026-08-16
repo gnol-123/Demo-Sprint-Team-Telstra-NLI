@@ -12,9 +12,10 @@ concurrency:
 jobs:
   # Frontend deploys are handled by Vercel's own GitHub integration — connect
   # the repo in the Vercel dashboard and it deploys automatically on push.
-  # This job only handles what Firebase itself owns: Firestore security rules.
+  # This job only handles what Firebase itself owns: Firestore and Storage
+  # security rules.
   deploy-firestore-rules:
-    name: Deploy Firestore Rules
+    name: Deploy Firestore & Storage Rules
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -28,7 +29,7 @@ jobs:
       - name: Deploy Firestore rules
         run: |
           npx firebase-tools deploy \
-            --only firestore:rules, storage \
+            --only firestore:rules,storage:rules \
             --project ${{ secrets.FIREBASE_PROJECT_ID }} \
             --non-interactive
 
