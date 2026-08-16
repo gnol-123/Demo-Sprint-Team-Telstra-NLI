@@ -29,7 +29,7 @@ jobs:
       - name: Deploy Firestore rules
         run: |
           npx firebase-tools deploy \
-            --only firestore:rules,storage:rules \
+            --only firestore:rules,storage \
             --project ${{ secrets.FIREBASE_PROJECT_ID }} \
             --non-interactive
 
