@@ -7,7 +7,7 @@ import { getTeamMembersCollection } from '@/lib/firebase/firestore'
 import { useAuth } from '@/hooks/useAuth'
 import { formatDate } from '@/lib/utils'
 import { EmptyState } from '@/components/shared/EmptyState'
-import { FullPageSpinner } from '@/components/shared/LoadingSpinner'
+import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { where } from 'firebase/firestore'
 import { deleteTeamMemberAction } from './actions'
 
@@ -28,7 +28,12 @@ export function TeamList() {
   const [deleting, setDeleting] = useState(false)
   const [confirmTarget, setConfirmTarget] = useState<string | null>(null)
 
-  if (loading) return <FullPageSpinner />
+  if (loading)
+    return (
+      <div className="flex justify-center py-16">
+        <LoadingSpinner size="lg" />
+      </div>
+    )
 
   if (error) {
     console.error('Error fetching team members:', error)
@@ -53,14 +58,14 @@ export function TeamList() {
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
       {members.map((member) => {
         const isOwn = member.uid === user?.uid
 
         return (
           <div
             key={member.uid}
-            className="relative rounded-lg border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+            className="relative flex flex-col items-center rounded-2xl border border-dashed border-zinc-700 bg-zinc-900/40 p-6 text-center"
           >
             {confirmTarget === member.uid ? (
               <div className="flex flex-col items-center gap-3 py-2">
