@@ -128,6 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await fbSignOut()
     setUser(null)
     setProfile(null)
+    window.location.href = '/auth/signin'
   }
 
   return (

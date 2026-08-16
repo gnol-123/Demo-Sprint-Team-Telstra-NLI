@@ -24,7 +24,7 @@ export default function SignUpPage() {
 
   useEffect(() => {
     if (!loading && !isSubmitting && user) {
-      router.replace('/dashboard')
+      router.replace('/team')
     }
   }, [loading, isSubmitting, user, router])
 
@@ -33,7 +33,7 @@ export default function SignUpPage() {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle()
-      router.replace('/dashboard')
+      router.replace('/team')
     } catch {
       toast.error('Google sign-in failed. Please try again.')
     }
@@ -54,15 +54,22 @@ export default function SignUpPage() {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-1 text-center">
-        <h1 className="text-2xl font-bold tracking-tight">Create account</h1>
+      <div className="space-y-2 text-center">
+
+        {/*logo*/}
+        <div className="mb-8 flex justify-center ">
+          <img src="/telstra-logo.png" alt="Telstra" className="h-14 w-auto" />
+        </div>
+
+        <h1 className="text-2xl font-bold tracking-tight text-white">Create account</h1>
         <p className="text-sm text-zinc-500">Get started for free</p>
       </div>
 
+      {/*Google Button*/}
       <button
         type="button"
         onClick={handleGoogleSignIn}
-        className="flex w-full items-center justify-center gap-3 rounded-md border border-zinc-300 bg-white px-4 py-2.5 text-sm font-medium shadow-sm transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800"
+        className="flex w-full items-center justify-center gap-3 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-zinc-800"
       >
         <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
           <path
@@ -85,18 +92,20 @@ export default function SignUpPage() {
         Continue with Google
       </button>
 
+      {/*Or thingy majigy*/}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-zinc-200 dark:border-zinc-700" />
+          <span className="w-full border-t border-zinc-500" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-zinc-50 px-2 text-zinc-400 dark:bg-zinc-950">or</span>
+          <span className="bg-black px-2 text-zinc-500">or</span>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/*name part*/}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
         <div className="space-y-1.5">
-          <label htmlFor="displayName" className="text-sm font-medium">
+          <label htmlFor="displayName" className="text-sm font-medium text-zinc-400">
             Name
           </label>
           <input
@@ -105,7 +114,7 @@ export default function SignUpPage() {
             autoComplete="name"
             aria-invalid={!!errors.displayName}
             aria-describedby={errors.displayName ? 'display-name-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white shadow-sm placeholder:text-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500"
             placeholder="Your full name"
             {...register('displayName')}
           />
@@ -115,9 +124,10 @@ export default function SignUpPage() {
             </p>
           )}
         </div>
-
+        
+        {/*email part*/}
         <div className="space-y-1.5">
-          <label htmlFor="email" className="text-sm font-medium">
+          <label htmlFor="email" className="text-sm font-medium text-zinc-400">
             Email
           </label>
           <input
@@ -126,7 +136,7 @@ export default function SignUpPage() {
             autoComplete="email"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? 'email-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white shadow-sm placeholder:text-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500"
             placeholder="you@example.com"
             {...register('email')}
           />
@@ -136,9 +146,10 @@ export default function SignUpPage() {
             </p>
           )}
         </div>
-
+        
+        {/*pw part*/}
         <div className="space-y-1.5">
-          <label htmlFor="password" className="text-sm font-medium">
+          <label htmlFor="password" className="text-sm font-medium text-zinc-400">
             Password
           </label>
           <input
@@ -147,7 +158,7 @@ export default function SignUpPage() {
             autoComplete="new-password"
             aria-invalid={!!errors.password}
             aria-describedby={errors.password ? 'password-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white shadow-sm placeholder:text-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500"
             placeholder="Min. 8 characters, 1 uppercase, 1 number"
             {...register('password')}
           />
@@ -157,9 +168,10 @@ export default function SignUpPage() {
             </p>
           )}
         </div>
-
+        
+        {/*confirm pw part*/}
         <div className="space-y-1.5">
-          <label htmlFor="confirmPassword" className="text-sm font-medium">
+          <label htmlFor="confirmPassword" className="text-sm font-medium text-zinc-400">
             Confirm password
           </label>
           <input
@@ -168,7 +180,7 @@ export default function SignUpPage() {
             autoComplete="new-password"
             aria-invalid={!!errors.confirmPassword}
             aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white shadow-sm placeholder:text-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500"
             placeholder="••••••••"
             {...register('confirmPassword')}
           />
@@ -179,20 +191,22 @@ export default function SignUpPage() {
           )}
         </div>
 
+        {/*submit button*/}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-black px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+          className=" mt-6 w-full rounded-lg bg-white px-4 py-2.5 text-sm font-bold text-black transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
         >
           {isSubmitting ? 'Creating account…' : 'Create account'}
         </button>
       </form>
-
-      <p className="text-center text-sm text-zinc-500">
+      
+      {/*alrdy have an acc? sign in*/}
+      <p className="text-center text-xs text-zinc-500">
         Already have an account?{' '}
         <Link
           href="/auth/signin"
-          className="font-medium text-zinc-900 hover:underline dark:text-white"
+          className="font-medium hover:underline text-white"
         >
           Sign in
         </Link>
