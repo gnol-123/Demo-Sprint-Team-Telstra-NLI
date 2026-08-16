@@ -11,6 +11,8 @@ import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { where } from 'firebase/firestore'
 import { deleteTeamMemberAction } from './actions'
 
+const BLURB_LIMIT = 120
+
 const ROLE_LABELS: Record<string, string> = {
   PM: 'Project Manager',
   DEV: 'Developer',
@@ -27,6 +29,15 @@ export function TeamList() {
   const { user } = useAuth()
   const [deleting, setDeleting] = useState(false)
   const [confirmTarget, setConfirmTarget] = useState<string | null>(null)
+  const [expanded, setExpanded] = useState<Set<string>>(new Set())
+
+  const toggleExpanded = (uid: string) =>
+    setExpanded((prev) => {
+      const next = new Set(prev)
+      if (next.has(uid)) next.delete(uid)
+      else next.add(uid)
+      return next
+    })
 
   if (loading)
     return (
@@ -61,6 +72,7 @@ export function TeamList() {
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
       {members.map((member) => {
         const isOwn = member.uid === user?.uid
+        const isExpanded = expanded.has(member.uid)
 
         return (
           <div
@@ -116,8 +128,32 @@ export function TeamList() {
                   {ROLE_LABELS[member.role] ?? member.role}
                 </p>
                 <p className="mt-3 text-xs leading-relaxed text-zinc-400">
-                  {member.blurb ? member.blurb : 'N/A'}
+                  {!member.blurb ? (
+                    'N/A'
+                  ) : isExpanded || member.blurb.length <= BLURB_LIMIT ? (
+                    member.blurb
+                  ) : (
+                    <>
+                      {member.blurb.slice(0, BLURB_LIMIT).trimEnd()}…{' '}
+                      <button
+                        type="button"
+                        onClick={() => toggleExpanded(member.uid)}
+                        className="font-semibold text-blue-400 underline underline-offset-2 transition-colors hover:text-blue-300"
+                      >
+                        read more
+                      </button>
+                    </>
+                  )}
                 </p>
+                {isExpanded && member.blurb && member.blurb.length > BLURB_LIMIT && (
+                  <button
+                    type="button"
+                    onClick={() => toggleExpanded(member.uid)}
+                    className="mt-1 text-xs font-semibold text-blue-400 underline underline-offset-2 transition-colors hover:text-blue-300"
+                  >
+                    show less
+                  </button>
+                )}
                 {member.createdAt && (
                   <p className="mt-3 text-[11px] text-zinc-600">
                     Joined {formatDate(member.createdAt.toDate())}
